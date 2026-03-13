@@ -58,10 +58,6 @@ padding-bottom: calc(72px + var(–safe-bot));
 
 .screen { display: none; flex-direction: column; flex: 1; animation: fadeIn .25s ease; }
 
-/* PWA standalone mode - add extra top padding for status bar */
-@media all and (display-mode: standalone) {
-.header { padding-top: calc(50px + 14px) !important; }
-}
 .screen.active { display: flex; }
 @keyframes fadeIn { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:translateY(0) } }
 
@@ -1757,6 +1753,17 @@ loadDemoData();
 renderDashboard();
 initWeekForm();
 initFoodForm();
+
+// Fix header padding in PWA standalone mode
+(function() {
+  const isStandalone = window.navigator.standalone === true;
+  if (isStandalone) {
+    const headers = document.querySelectorAll('.header');
+    headers.forEach(h => {
+      h.style.paddingTop = '58px';
+    });
+  }
+})();
 </script>
 
 <!--
